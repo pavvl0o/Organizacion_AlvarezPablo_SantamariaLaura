@@ -1,4 +1,4 @@
-# Proyecto Integrador – Organización y Arquitectura de Computadores
+# Proyecto 1 - Organización de Computadores 
 
 ## Estudiantes
 
