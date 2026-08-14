@@ -1,58 +1,96 @@
-# Compuertas Lógicas en HDL
+# Proyecto Integrador – Organización y Arquitectura de Computadores
 
-## Contexto
+## Estudiantes
+Nombre: Pablo Alvarez Restepo
+Nombre: Laura Santamaria Espinosa
 
-Este repositorio corresponde a la primera actividad del curso de Organización de Computadores. El objetivo fue diseñar un conjunto de circuitos lógicos utilizando HDL (Hardware Description Language).
+## Descripción
 
-## Descripción general
+Este repositorio contiene la solución al Proyecto Integrador del primer corte del curso de Organización y Arquitectura de Computadores.
 
-El desarrollo sigue un enfoque incremental: cada compuerta se implementa reutilizando las compuertas ya construidas anteriormente. De esta manera, a partir de operaciones lógicas simples de un bit, se llega a circuitos capaces de operar sobre buses de 16 bits y de seleccionar entre múltiples entradas o salidas, sentando las bases para el diseño de componentes de hardware más complejos en etapas posteriores del curso.
+El proyecto se basa en los Proyectos 1, 2 y 3 de la plataforma Nand2Tetris e incluye una extensión académica denominada ALUExtendida, desarrollada específicamente para este curso.
 
-## Compuertas implementadas
+## Contenido
+### Proyecto 1
 
-**Compuertas básicas**
-- Not
-- And
-- Or
-- Xor
+Implementación de las compuertas lógicas básicas y estructuras combinacionales derivadas.
 
-**Selectores**
-- Mux
-- DMux
+COMPONENTES
+Not
+And
+Or
+Xor
+Mux
+DMux
+Not16
+And16
+Or16
+Mux16
+Or8Way
+Mux4Way16
+Mux8Way16
+DMux4Way
+DMux8Way
 
-**Versiones de 16 bits**
-- Not16
-- And16
-- Or16
-- Mux16
 
-**Compuertas de múltiples entradas o salidas**
-- Or8Way
-- Mux4Way16
-- Mux8Way16
-- DMux4Way
-- DMux8Way
 
-## Herramientas
+### Proyecto 2
 
-Los circuitos fueron descritos en archivos `.hdl` y verificados mediante los scripts de prueba (`.tst`) y archivos de comparación (`.cmp`) provistos por el simulador de hardware del curso.
+Implementación de circuitos aritméticos y de la ALU.
 
-## Estructura del proyecto
+COMPONENTES
+HalfAdder
+FullAdder
+Add16
+Inc16
+ALU
 
-```
-├── Not.hdl
-├── And.hdl
-├── Or.hdl
-├── Xor.hdl
-├── Mux.hdl
-├── DMux.hdl
-├── Not16.hdl
-├── And16.hdl
-├── Or16.hdl
-├── Mux16.hdl
-├── Or8Way.hdl
-├── Mux4Way16.hdl
-├── Mux8Way16.hdl
-├── DMux4Way.hdl
-└── DMux8Way.hdl
-```
+
+
+### Proyecto 3
+
+Implementación de componentes secuenciales y memoria.
+
+Componentes
+Bit
+Register
+RAM8
+RAM64
+RAM512
+RAM4K
+RAM16K
+PC
+
+
+
+### Extensión: ALUExtendida
+
+La ALUExtendida conserva la interfaz de la ALU original de Nand2Tetris y agrega cinco operaciones nuevas, seleccionables mediante el pin adicional a. La ALU original no fue modificada; la ALUExtendida la reutiliza como componente interno y añade un camino paralelo para las nuevas operaciones, seleccionando la salida final mediante un multiplexor y recalculando las banderas zr y ng sobre dicha salida final.
+
+#### Operaciones soportadas
+
+XOR	--- 010110 --- out = x XOR y
+NAND --- 000001 ---	out = !(x AND y)
+NOR	--- 110100 ---	out = !(x OR y)
+EQ	--- 101000 ---	out = 1 si x = y, out = 0 si x ≠ y
+ABS	--- 100010 ---	out = |x| (complemento a dos, y se ignora)
+
+
+
+## Estructura del Repositorio
+
+nombre_equipo/
+├── proyecto01/
+│   ├── HDL
+│   └── TESTS
+├── proyecto02/
+│   ├── HDL
+│   └── TESTS
+├── proyecto03/
+│   ├── HDL
+│   └── TESTS
+├── alu_extendida/
+│   ├── HDL
+│   ├── TESTS
+│   └── DOCUMENTACION
+└── README.md
