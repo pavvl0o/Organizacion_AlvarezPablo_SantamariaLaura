@@ -8,7 +8,7 @@
 ## Descripción
 
 Este repositorio contiene la solución al Proyecto Integrador del primer corte
-del curso de Organización y Arquitectura de Computadores.
+del curso de Organización de Computadores.
 
 El proyecto se basa en los Proyectos 1, 2 y 3 de la plataforma Nand2Tetris e
 incluye una extensión académica denominada **ALUExtendida**, desarrollada
