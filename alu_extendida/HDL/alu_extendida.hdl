@@ -1,0 +1,154 @@
+CHIP ALUExtendida {
+    IN
+        x[16], y[16],
+        zx, nx, zy, ny, f, no;
+
+    OUT
+        out[16],
+        zr,
+        ng;
+
+    PARTS:
+
+    ALU(
+        x=x,
+        y=y,
+        zx=zx,
+        nx=nx,
+        zy=zy,
+        ny=ny,
+        f=f,
+        no=no,
+        out=aluOut,
+        zr=aluZr,
+        ng=aluNg
+    );
+
+    Not(in=zx, out=nzx);
+    Not(in=nx, out=nnx);
+    Not(in=zy, out=nzy);
+    Not(in=ny, out=nny);
+    Not(in=f,  out=nf);
+    Not(in=no, out=nno);
+
+    And(a=nzx, b=nx, out=xorC1);
+    And(a=nzy, b=ny, out=xorC2);
+    And(a=f, b=nno, out=xorC3);
+    And(a=xorC1, b=xorC2, out=xorC4);
+    And(a=xorC4, b=xorC3, out=isXor);
+
+    And(a=nzx, b=nnx, out=nandC1);
+    And(a=nzy, b=nny, out=nandC2);
+    And(a=nf, b=no, out=nandC3);
+    And(a=nandC1, b=nandC2, out=nandC4);
+    And(a=nandC4, b=nandC3, out=isNand);
+
+    And(a=zx, b=nx, out=norC1);
+    And(a=nzy, b=ny, out=norC2);
+    And(a=nf, b=nno, out=norC3);
+    And(a=norC1, b=norC2, out=norC4);
+    And(a=norC4, b=norC3, out=isNor);
+
+    And(a=zx, b=nnx, out=eqC1);
+    And(a=zy, b=nny, out=eqC2);
+    And(a=nf, b=nno, out=eqC3);
+    And(a=eqC1, b=eqC2, out=eqC4);
+    And(a=eqC4, b=eqC3, out=isEq);
+
+    And(a=zx, b=nnx, out=absC1);
+    And(a=nzy, b=nny, out=absC2);
+    And(a=f, b=nno, out=absC3);
+    And(a=absC1, b=absC2, out=absC4);
+    And(a=absC4, b=absC3, out=isAbs);
+
+    Xor16(
+        a=x,
+        b=y,
+        out=xorOut
+    );
+
+    Nand16(
+        a=x,
+        b=y,
+        out=nandOut
+    );
+
+    Nor16(
+        a=x,
+        b=y,
+        out=norOut
+    );
+
+    Eq16(
+        a=x,
+        b=y,
+        out=eqOut
+    );
+
+    Abs16(
+        in=x,
+        out=absOut
+    );
+
+    Mux16(
+        a=aluOut,
+        b=xorOut,
+        sel=isXor,
+        out=outXor
+    );
+
+    Mux16(
+        a=outXor,
+        b=nandOut,
+        sel=isNand,
+        out=outNand
+    );
+
+    Mux16(
+        a=outNand,
+        b=norOut,
+        sel=isNor,
+        out=outNor
+    );
+
+    Mux16(
+        a=outNor,
+        b=eqOut,
+        sel=isEq,
+        out=outEq
+    );
+
+    Mux16(
+        a=outEq,
+        b=absOut,
+        sel=isAbs,
+        out=out
+    );
+
+    Or8Way(
+        in=out[0..7],
+        out=orLow
+    );
+
+    Or8Way(
+        in=out[8..15],
+        out=orHigh
+    );
+
+    Or(
+        a=orLow,
+        b=orHigh,
+        out=orAll
+    );
+
+    Not(
+        in=orAll,
+        out=zr
+    );
+
+    And(
+        a=out[15],
+        b=true,
+        out=ng
+    );
+}

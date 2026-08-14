@@ -1,0 +1,23 @@
+CHIP Abs16 {
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+
+    Not16(
+        in=in,
+        out=notIn
+    );
+
+    Inc16(
+        in=notIn,
+        out=negatedIn
+    );
+
+    Mux16(
+        a=in,
+        b=negatedIn,
+        sel=in[15],
+        out=out
+    );
+}

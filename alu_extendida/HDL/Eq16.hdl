@@ -1,0 +1,47 @@
+CHIP Eq16 {
+    IN a[16], b[16];
+    OUT out[16];
+
+    PARTS:
+
+    Xor16(
+        a=a,
+        b=b,
+        out[0..7]=diffLow,
+        out[8..15]=diffHigh
+    );
+
+    Or8Way(
+        in=diffLow,
+        out=hasDiffLow
+    );
+
+    Or8Way(
+        in=diffHigh,
+        out=hasDiffHigh
+    );
+
+    Or(
+        a=hasDiffLow,
+        b=hasDiffHigh,
+        out=hasDifference
+    );
+
+
+    Not(
+        in=hasDifference,
+        out=areEqual
+    );
+
+    Inc16(
+        in=false,
+        out=one
+    );
+
+    Mux16(
+        a=false,
+        b=one,
+        sel=areEqual,
+        out=out
+    );
+}
